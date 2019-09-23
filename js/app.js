@@ -25,19 +25,31 @@ Mall.all = [];
 
 function generateRandom() {
   var random = Math.floor(Math.random() * Mall.all.length);
-
+  console.log("random" +random);
   return random;
 }
 
+
+
+
+
 function renderGeneral() {
+
   leftImage = generateRandom();
   middleImage = generateRandom();
   rightImage = generateRandom();
 }
 
-function render() {
 
+
+
+
+//var memory = [];
+
+function render() {
+  
   renderGeneral();
+
   switch (true) {
 
 
@@ -57,52 +69,67 @@ function render() {
     default:
 
       left.src = Mall.all[leftImage].image;
+      //console.log("Left" +left.src);
+
       middle.src = Mall.all[middleImage].image;
+
       right.src = Mall.all[rightImage].image;
 
+
+
+
+      Mall.all[leftImage].views++;
+      Mall.all[rightImage].views++;
+      Mall.all[middleImage].views++;
+
+
   }
-
-
 }
+
+
+
+
 
 //////////////////////////////////////////////////
 var clickOnImage = function (event) {
 
   var imageClicked = event.target.id;
+  console.log("Here" + imageClicked);
 
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
     totalVotes++;
-    // need to incrament goat clicked by one
+
     if (imageClicked === 'left') {
-      // do logic to incrament the number
       Mall.all[leftImage].clicked++;
     } else if (imageClicked === 'right') {
       Mall.all[rightImage].clicked++;
+    } else if (imageClicked === 'middle') {
+      Mall.all[middleImage].clicked++;
+    } else {
+      alert('PLease click on an image');
     }
-  } else {
-    alert('you didn\'t select an image');
+
+    console.log(Mall.all[leftImage].clicked);
+    console.log(Mall.all[middleImage].clicked);
+    console.log(Mall.all[rightImage].clicked);
+
+
+    if (totalVotes === 5) {
+
+      sectionTag.removeEventListener('click', clickOnImage);
+      alert("You completed the voting");
+
+      for (var i = 0; i < Mall.all.length; i++) {
+        var shop = Mall.all[i];
+        console.log(`${shop.name} received ${shop.clicked} votes with ${shop.views} views`);
+      }
+    } else {
+      render();
+    }
+
   }
-
-  console.log(Mall.all[leftImage]);
-  console.log(Mall.all[rightImage]);
-
-  // check the goat votes
-  // if (goatVote === 5) {
-  //   // remove
-  //   goatImagesTag.removeEventListener('click', handleClickOnGoat);
-  //   console.log("you completed the voting")
-  //   // output to the browser the results
-  //   // "Sassy Goat received 4 votes with 5 views"
-  //   for (var i = 0; i < Goat.allImages.length; i++) {
-  //     var goat = Goat.allImages[i];
-  //     console.log(`${goat.name} received ${goat.clicked} votes with ${goat.views} views`);
-  //   }
-  // } else {
-  //   renderGoats();
-  // }
-
-}
+};
 
 
 
