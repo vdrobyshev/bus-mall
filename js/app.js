@@ -120,14 +120,13 @@ var clickOnImage = function (event) {
         var listElement = document.createElement('li');
         listElement.textContent = `${shop.name} received ${shop.clicked} vote(s) and was seen ${shop.views} times`;
         ulElement.appendChild(listElement);
-        // sectionTag.appendChild(ulElement);
+        sectionTag.appendChild(ulElement);
 
       }
     } else {
       render();
     }
-    sectionTag.appendChild(ulElement);
-    console.log(sectionTag);
+
   }
 };
 
