@@ -108,6 +108,9 @@ var clickOnImage = function (event) {
 
 
     if (totalVotes === 5) {
+      getData();
+      barChart.update();
+
 
       sectionTag.removeEventListener('click', clickOnImage);
 
@@ -125,6 +128,7 @@ var clickOnImage = function (event) {
       }
     } else {
       render();
+      
     }
 
   }
@@ -155,6 +159,116 @@ new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
 
 render();
-
-
 sectionTag.addEventListener('click', clickOnImage);
+
+
+
+
+var nameData = [];
+var clickData = [];
+var viewsData = [];
+
+
+function getData() {
+  for (var i = 0; i < Mall.all.length; i++) {
+    nameData.push(Mall.all[i].name);
+    console.log(Mall.all[i].name);
+    clickData.push(Mall.all[i].clicked);
+    console.log(Mall.all[i].clicked);
+    viewsData.push(Mall.all[i].views);
+  }
+
+};
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var chartClicks = {
+  label: 'Number of clicks',
+  data: clickData,
+  backgroundColor: 'rgb(50, 58, 168)',
+  borderWidth: 0,
+  yAxisID: 'y-axis-clicks',
+};
+
+
+
+var chartViews = {
+  label: 'Number of views',
+  data: viewsData,
+  backgroundColor: 'rgb(50, 168, 50)',
+  borderWidth: 0,
+  yAxisID: 'y-axis-views'
+
+};
+
+var chartNames = {
+  labels: nameData,
+  datasets: [chartClicks, chartViews],
+};
+
+var chartOptions = {
+  scales: {
+    xAxes: [{
+      barPercentage: 1,
+      categoryPercentage: 0.6
+    }],
+    yAxes: [{
+      id: 'y-axis-clicks'
+    }, {
+      id: 'y-axis-views'
+    }]
+  }
+};
+
+
+var barChart = new Chart(ctx, {
+  type: 'bar',
+  data: chartNames,
+  options: chartOptions,
+});
+
+
+
+
+
+
+
+// var ctx = document.getElementById('myChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true,
+//         }
+//       }],
+//     },
+//   },
+// });
