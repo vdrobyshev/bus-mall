@@ -12,7 +12,6 @@ var middle = document.getElementById('middle');
 var right = document.getElementById('right');
 
 
-
 function Mall(name, image) {
   this.name = name;
   this.image = image;
@@ -23,14 +22,13 @@ function Mall(name, image) {
 
 Mall.all = [];
 
+/////////generate random numbers
+
 function generateRandom() {
   var random = Math.floor(Math.random() * Mall.all.length);
   console.log('random' + random);
   return random;
 }
-
-
-
 
 
 function renderGeneral() {
@@ -42,7 +40,7 @@ function renderGeneral() {
 
 
 
-
+//////////render to the screen
 
 var memory = [];
 
@@ -50,14 +48,13 @@ function render() {
 
   renderGeneral();
 
-  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) {
+  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) { ///check for repeatition of previous 3 images
 
-    // renderGeneral();
     render();
   }
 
-  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) {
-    // renderGeneral();
+  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) { //checks for repeatition of current 3 images
+
     render();
   }
 
@@ -87,11 +84,11 @@ function render() {
 }
 
 
+/////eventListener
 
 var clickOnImage = function (event) {
 
   var imageClicked = event.target.id;
-
 
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
@@ -107,24 +104,62 @@ var clickOnImage = function (event) {
       alert('PLease click on an image');
     }
 
-    console.log(Mall.all[leftImage].clicked);
-    console.log(Mall.all[middleImage].clicked);
-    console.log(Mall.all[rightImage].clicked);
+    // console.log(Mall.all[leftImage].clicked);
+    // console.log(Mall.all[middleImage].clicked);
+    // console.log(Mall.all[rightImage].clicked);
+
+
+    // var cust = document.getElementById(`${this.name}`);
+    //sectiontag!
+
+
+    // var ulElement = document.createElement('ul');
+
+    // for (var i = 0; i < this.cookiesPurchased.length; i++) {
+
+
+
+    //   var listElement = document.createElement('li');
+
+    //   listElement.textContent = `${hours[i]} : ${this.cookiesPurchased[i]}`;
+
+    //   ulElement.appendChild(listElement);
+
+
+
+
+
+    // }
+
+
+
+    // cust.appendChild(ulElement);
+
+
+
+
+
 
 
     if (totalVotes === 25) {
 
       sectionTag.removeEventListener('click', clickOnImage);
-      alert("You completed the voting");
+      alert('You completed the voting');
+
+      var ulElement = document.createElement('ul');
 
       for (var i = 0; i < Mall.all.length; i++) {
         var shop = Mall.all[i];
-        console.log(`${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`);
+        var listElement = document.createElement('li');
+        listElement.textContent = `${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`;
+        ulElement.appendChild(listElement);
+
+        //console.log(`${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`);
       }
     } else {
       render();
     }
-
+    sectionTag.appendChild(ulElement);
   }
 };
 
