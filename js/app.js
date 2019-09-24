@@ -48,12 +48,12 @@ function render() {
 
   renderGeneral();
 
-  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) { ///check for repeatition of previous 3 images
+  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) { ///check for repetition of previous 3 images
 
     render();
   }
 
-  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) { //checks for repeatition of current 3 images
+  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) { //checks for repetition of current 3 images
 
     render();
   }
@@ -90,6 +90,7 @@ var clickOnImage = function (event) {
 
   var imageClicked = event.target.id;
 
+
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
     totalVotes++;
@@ -104,46 +105,15 @@ var clickOnImage = function (event) {
       alert('PLease click on an image');
     }
 
-    // console.log(Mall.all[leftImage].clicked);
-    // console.log(Mall.all[middleImage].clicked);
-    // console.log(Mall.all[rightImage].clicked);
 
 
-    // var cust = document.getElementById(`${this.name}`);
-    //sectiontag!
+    if (totalVotes === 5) {
+      getData();
+      barChart.update();
 
-
-    // var ulElement = document.createElement('ul');
-
-    // for (var i = 0; i < this.cookiesPurchased.length; i++) {
-
-
-
-    //   var listElement = document.createElement('li');
-
-    //   listElement.textContent = `${hours[i]} : ${this.cookiesPurchased[i]}`;
-
-    //   ulElement.appendChild(listElement);
-
-
-
-
-
-    // }
-
-
-
-    // cust.appendChild(ulElement);
-
-
-
-
-
-
-
-    if (totalVotes === 25) {
 
       sectionTag.removeEventListener('click', clickOnImage);
+
       alert('You completed the voting');
 
       var ulElement = document.createElement('ul');
@@ -151,20 +121,21 @@ var clickOnImage = function (event) {
       for (var i = 0; i < Mall.all.length; i++) {
         var shop = Mall.all[i];
         var listElement = document.createElement('li');
-        listElement.textContent = `${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`;
+        listElement.textContent = `${shop.name} received ${shop.clicked} vote(s) and was seen ${shop.views} times`;
         ulElement.appendChild(listElement);
+        sectionTag.appendChild(ulElement);
 
-        //console.log(`${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`);
       }
     } else {
       render();
+      
     }
-    sectionTag.appendChild(ulElement);
+
   }
 };
 
 
-
+///populate object Mall
 
 new Mall('bag', '/images/bag.jpg');
 new Mall('banana', '/images/banana.jpg');
@@ -188,6 +159,116 @@ new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
 
 render();
-
-
 sectionTag.addEventListener('click', clickOnImage);
+
+
+
+
+var nameData = [];
+var clickData = [];
+var viewsData = [];
+
+
+function getData() {
+  for (var i = 0; i < Mall.all.length; i++) {
+    nameData.push(Mall.all[i].name);
+    console.log(Mall.all[i].name);
+    clickData.push(Mall.all[i].clicked);
+    console.log(Mall.all[i].clicked);
+    viewsData.push(Mall.all[i].views);
+  }
+
+};
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var chartClicks = {
+  label: 'Number of clicks',
+  data: clickData,
+  backgroundColor: 'rgb(50, 58, 168)',
+  borderWidth: 0,
+  yAxisID: 'y-axis-clicks',
+};
+
+
+
+var chartViews = {
+  label: 'Number of views',
+  data: viewsData,
+  backgroundColor: 'rgb(50, 168, 50)',
+  borderWidth: 0,
+  yAxisID: 'y-axis-views'
+
+};
+
+var chartNames = {
+  labels: nameData,
+  datasets: [chartClicks, chartViews],
+};
+
+var chartOptions = {
+  scales: {
+    xAxes: [{
+      barPercentage: 1,
+      categoryPercentage: 0.6
+    }],
+    yAxes: [{
+      id: 'y-axis-clicks'
+    }, {
+      id: 'y-axis-views'
+    }]
+  }
+};
+
+
+var barChart = new Chart(ctx, {
+  type: 'bar',
+  data: chartNames,
+  options: chartOptions,
+});
+
+
+
+
+
+
+
+// var ctx = document.getElementById('myChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true,
+//         }
+//       }],
+//     },
+//   },
+// });
