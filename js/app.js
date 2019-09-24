@@ -128,7 +128,7 @@ var clickOnImage = function (event) {
       }
     } else {
       render();
-      
+
     }
 
   }
@@ -199,7 +199,7 @@ var chartViews = {
   data: viewsData,
   backgroundColor: 'rgb(50, 168, 50)',
   borderWidth: 0,
-  yAxisID: 'y-axis-views'
+  yAxisID: 'y-axis-views',
 
 };
 
@@ -209,24 +209,39 @@ var chartNames = {
 };
 
 var chartOptions = {
-  scales: {
-    xAxes: [{
-      barPercentage: 1,
-      categoryPercentage: 0.6
-    }],
-    yAxes: [{
-      id: 'y-axis-clicks'
-    }, {
-      id: 'y-axis-views'
-    }]
-  }
+  // scales: {
+  //   xAxes: [{
+  //     barPercentage: 1,
+  //     categoryPercentage: 0.6,
+  //   }],
+  //   // yAxes: [{
+  //   //   ticks: {
+  //   //     beginAtZero: true,
+  //   //   },
+  //   //}],
+  // },
 };
+
+
+
+
+// var chartOptions = {
+//   scales: {
+//     xAxes: [{
+//       barPercentage: 1,
+//       categoryPercentage: 0.6
+//     }],
+//     yAxes: [{
+//       id: 'y-axis-clicks'
+//     }],
+//   },
+// };
 
 
 var barChart = new Chart(ctx, {
   type: 'bar',
   data: chartNames,
-  options: chartOptions,
+  options: chartOptions
 });
 
 
