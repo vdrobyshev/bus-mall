@@ -48,12 +48,12 @@ function render() {
 
   renderGeneral();
 
-  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) { ///check for repeatition of previous 3 images
+  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) { ///check for repetition of previous 3 images
 
     render();
   }
 
-  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) { //checks for repeatition of current 3 images
+  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) { //checks for repetition of current 3 images
 
     render();
   }
@@ -90,6 +90,7 @@ var clickOnImage = function (event) {
 
   var imageClicked = event.target.id;
 
+
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
     totalVotes++;
@@ -104,46 +105,12 @@ var clickOnImage = function (event) {
       alert('PLease click on an image');
     }
 
-    // console.log(Mall.all[leftImage].clicked);
-    // console.log(Mall.all[middleImage].clicked);
-    // console.log(Mall.all[rightImage].clicked);
 
 
-    // var cust = document.getElementById(`${this.name}`);
-    //sectiontag!
-
-
-    // var ulElement = document.createElement('ul');
-
-    // for (var i = 0; i < this.cookiesPurchased.length; i++) {
-
-
-
-    //   var listElement = document.createElement('li');
-
-    //   listElement.textContent = `${hours[i]} : ${this.cookiesPurchased[i]}`;
-
-    //   ulElement.appendChild(listElement);
-
-
-
-
-
-    // }
-
-
-
-    // cust.appendChild(ulElement);
-
-
-
-
-
-
-
-    if (totalVotes === 25) {
+    if (totalVotes === 5) {
 
       sectionTag.removeEventListener('click', clickOnImage);
+
       alert('You completed the voting');
 
       var ulElement = document.createElement('ul');
@@ -151,20 +118,21 @@ var clickOnImage = function (event) {
       for (var i = 0; i < Mall.all.length; i++) {
         var shop = Mall.all[i];
         var listElement = document.createElement('li');
-        listElement.textContent = `${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`;
+        listElement.textContent = `${shop.name} received ${shop.clicked} vote(s) and was seen ${shop.views} times`;
         ulElement.appendChild(listElement);
+        // sectionTag.appendChild(ulElement);
 
-        //console.log(`${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`);
       }
     } else {
       render();
     }
     sectionTag.appendChild(ulElement);
+    console.log(sectionTag);
   }
 };
 
 
-
+///populate object Mall
 
 new Mall('bag', '/images/bag.jpg');
 new Mall('banana', '/images/banana.jpg');
