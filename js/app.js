@@ -25,7 +25,7 @@ Mall.all = [];
 
 function generateRandom() {
   var random = Math.floor(Math.random() * Mall.all.length);
-  console.log("random" +random);
+  console.log('random' + random);
   return random;
 }
 
@@ -44,57 +44,54 @@ function renderGeneral() {
 
 
 
-//var memory = [];
+var memory = [];
 
 function render() {
-  
+
   renderGeneral();
 
-  switch (true) {
+  if (memory.includes(leftImage) || memory.includes(middleImage) || memory.includes(rightImage)) {
+
+    // renderGeneral();
+    render();
+  }
+
+  else if (leftImage === middleImage || leftImage === rightImage || middleImage === rightImage) {
+    // renderGeneral();
+    render();
+  }
 
 
-    case (leftImage === middleImage):
-      renderGeneral();
-      break;
+  else {
+
+    memory = [];
+    left.src = Mall.all[leftImage].image;
+    memory.push(leftImage);
 
 
-    case (leftImage === rightImage):
-      renderGeneral();
-      break;
+    middle.src = Mall.all[middleImage].image;
+    memory.push(middleImage);
 
-    case (middleImage === rightImage):
-      renderGeneral();
-      break;
 
-    default:
-
-      left.src = Mall.all[leftImage].image;
-      //console.log("Left" +left.src);
-
-      middle.src = Mall.all[middleImage].image;
-
-      right.src = Mall.all[rightImage].image;
+    right.src = Mall.all[rightImage].image;
+    memory.push(rightImage);
 
 
 
 
-      Mall.all[leftImage].views++;
-      Mall.all[rightImage].views++;
-      Mall.all[middleImage].views++;
-
+    Mall.all[leftImage].views++;
+    Mall.all[rightImage].views++;
+    Mall.all[middleImage].views++;
 
   }
 }
 
 
 
-
-
-//////////////////////////////////////////////////
 var clickOnImage = function (event) {
 
   var imageClicked = event.target.id;
-  console.log("Here" + imageClicked);
+
 
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
@@ -115,14 +112,14 @@ var clickOnImage = function (event) {
     console.log(Mall.all[rightImage].clicked);
 
 
-    if (totalVotes === 5) {
+    if (totalVotes === 25) {
 
       sectionTag.removeEventListener('click', clickOnImage);
       alert("You completed the voting");
 
       for (var i = 0; i < Mall.all.length; i++) {
         var shop = Mall.all[i];
-        console.log(`${shop.name} received ${shop.clicked} votes with ${shop.views} views`);
+        console.log(`${shop.name} received ${shop.clicked} votes and was seen ${shop.views} times`);
       }
     } else {
       render();
@@ -130,10 +127,6 @@ var clickOnImage = function (event) {
 
   }
 };
-
-
-
-
 
 
 
@@ -154,13 +147,12 @@ new Mall('scissors', '/images/scissors.jpg');
 new Mall('shark', '/images/shark.jpg');
 new Mall('sweep', '/images/sweep.png');
 new Mall('tauntaun', '/images/tauntaun.jpg');
-new Mall('unicorn', '/images/usb.gif');
-new Mall('usb', '/images/bag.jpg');
+new Mall('unicorn', '/images/unicorn.jpg');
+new Mall('usb', '/images/usb.gif');
 new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
 
 render();
 
-console.log(Mall.all);
 
 sectionTag.addEventListener('click', clickOnImage);
