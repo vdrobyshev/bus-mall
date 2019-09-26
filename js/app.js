@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var leftImage = null;
 var middleImage = null;
@@ -12,12 +12,17 @@ var middle = document.getElementById('middle');
 var right = document.getElementById('right');
 
 
+
+
+//////Object Constructor
 function Mall(name, image) {
   this.name = name;
   this.image = image;
   this.clicked = 0;
   this.views = 0;
   Mall.all.push(this);
+
+
 }
 
 Mall.all = [];
@@ -26,7 +31,7 @@ Mall.all = [];
 
 function generateRandom() {
   var random = Math.floor(Math.random() * Mall.all.length);
-  console.log('random' + random);
+  //console.log('random' + random);
   return random;
 }
 
@@ -74,8 +79,6 @@ function render() {
     memory.push(rightImage);
 
 
-
-
     Mall.all[leftImage].views++;
     Mall.all[rightImage].views++;
     Mall.all[middleImage].views++;
@@ -87,7 +90,7 @@ function render() {
 /////eventListener
 
 var clickOnImage = function (event) {
-
+  //retrieveStorage();
   var imageClicked = event.target.id;
 
 
@@ -106,10 +109,17 @@ var clickOnImage = function (event) {
     }
 
 
-
+    //////////////////////////////////////////////////
     if (totalVotes === 25) {
-      getData();
+
+      updateStorage();
+      // retrieveStorage();
+      getData();//chart array
+
+      populateChart();
       barChart.update();
+
+
 
 
       sectionTag.removeEventListener('click', clickOnImage);
@@ -128,7 +138,8 @@ var clickOnImage = function (event) {
       }
     } else {
       render();
-      
+
+
     }
 
   }
@@ -157,8 +168,10 @@ new Mall('unicorn', '/images/unicorn.jpg');
 new Mall('usb', '/images/usb.gif');
 new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
-
-render();
+console.log(Mall.all);
+//updateStorage();
+console.log(localStorage)
+//render();
 sectionTag.addEventListener('click', clickOnImage);
 
 
@@ -168,67 +181,103 @@ var nameData = [];
 var clickData = [];
 var viewsData = [];
 
-
+//////generates data for the chart
 function getData() {
   for (var i = 0; i < Mall.all.length; i++) {
     nameData.push(Mall.all[i].name);
-    console.log(Mall.all[i].name);
+    //console.log(Mall.all[i].name);
     clickData.push(Mall.all[i].clicked);
-    console.log(Mall.all[i].clicked);
+    //console.log(Mall.all[i].clicked);
     viewsData.push(Mall.all[i].views);
   }
 
-};
+}
 
 
 
 var ctx = document.getElementById('myChart').getContext('2d');
 
-var chartClicks = {
-  label: 'Number of clicks',
-  data: clickData,
-  backgroundColor: 'rgb(50, 58, 168)',
-  borderWidth: 0,
-  yAxisID: 'y-axis-clicks',
-};
+var barChart;
+function populateChart() {
+
+
+  //////////The design and approach was borrowed from https://codepen.io/Shokeen/pen/NpgbKg
+  var chartClicks = {
+    label: 'Number of clicks',
+    data: clickData,
+    backgroundColor: 'rgb(50, 58, 168)',
+    yAxisID: 'y',
+  };
 
 
 
-var chartViews = {
-  label: 'Number of views',
-  data: viewsData,
-  backgroundColor: 'rgb(50, 168, 50)',
-  borderWidth: 0,
- 
+  var chartViews = {
+    label: 'Number of views',
+    data: viewsData,
+    backgroundColor: 'rgb(50, 168, 50)',
 
-};
+  };
 
-var chartNames = {
-  labels: nameData,
-  datasets: [chartClicks, chartViews],
-};
+  var chartNames = {
+    labels: nameData,
+    datasets: [chartClicks, chartViews],
+  };
 
-var chartOptions = {
-  scales: {
-    xAxes: [{
-      barPercentage: 1,
-      categoryPercentage: 0.6
-    }],
-    yAxes: [{
-      id: 'y-axis-clicks'
+  var chartOptions = {
+    scales: {
+      xAxes: [{
+        barPercentage: 1,
+        categoryPercentage: 0.6,
+      }],
+      yAxes: [{
+        id: 'y',
+      }
+
+      ],
     },
-     
-  ]
+  };
+
+
+  barChart = new Chart(ctx, {
+    type: 'bar',
+    data: chartNames,
+    options: chartOptions,
+  });
+
+}
+
+function updateStorage() {
+
+  var jsonString = JSON.stringify(Mall.all);
+  localStorage.setItem('mall', jsonString);
+
+}
+
+//116
+function retrieveStorage() {
+  if (localStorage.mall) {
+    console.log(localStorage.mall)
+    var data = localStorage.getItem('mall');
+    //console.log(data);
+
+    var parsedData = JSON.parse(data);
+    //console.log(parsedData);
+
+    Mall.all = parsedData;
+
+
+    // for (var i = 0; i < parsedData.length; i++) {
+    //   new Mall(parsedData[i].name, parsedData[i].image, parsedData[i].clicked, parsedData[i].views);
+    // }
+    //console.log(Mall.all);
+
+    // render();
   }
-};
+  render();
+}
+//localStorage.clear();
+//
 
-
-var barChart = new Chart(ctx, {
-  type: 'bar',
-  data: chartNames,
-  options: chartOptions,
-});
-
-
+retrieveStorage();
 
 
