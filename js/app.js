@@ -154,26 +154,26 @@ var clickOnImage = function (event) {
 
 ///populate object Mall
 
-new Mall('bag', '/images/bag.jpg');
-new Mall('banana', '/images/banana.jpg');
-new Mall('bathroom', '/images/bathroom.jpg');
-new Mall('boots', '/images/boots.jpg');
-new Mall('breakfast', '/images/breakfast.jpg');
-new Mall('bubblegum', '/images/bubblegum.jpg');
-new Mall('chair', '/images/chair.jpg');
-new Mall('cthulhu', '/images/cthulhu.jpg');
-new Mall('dog-duck', '/images/dog-duck.jpg');
-new Mall('dragon', '/images/dragon.jpg');
-new Mall('pen', '/images/pen.jpg');
-new Mall('pet-sweep', '/images/pet-sweep.jpg');
-new Mall('scissors', '/images/scissors.jpg');
-new Mall('shark', '/images/shark.jpg');
-new Mall('sweep', '/images/sweep.png');
-new Mall('tauntaun', '/images/tauntaun.jpg');
-new Mall('unicorn', '/images/unicorn.jpg');
-new Mall('usb', '/images/usb.gif');
-new Mall('water-can', '/images/water-can.jpg');
-new Mall('wine-glass', '/images/wine-glass.jpg');
+new Mall('bag', 'images/bag.jpg');
+new Mall('banana', 'images/banana.jpg');
+new Mall('bathroom', 'images/bathroom.jpg');
+new Mall('boots', 'images/boots.jpg');
+new Mall('breakfast', 'images/breakfast.jpg');
+new Mall('bubblegum', 'images/bubblegum.jpg');
+new Mall('chair', 'images/chair.jpg');
+new Mall('cthulhu', 'images/cthulhu.jpg');
+new Mall('dog-duck', 'images/dog-duck.jpg');
+new Mall('dragon', 'images/dragon.jpg');
+new Mall('pen', 'images/pen.jpg');
+new Mall('pet-sweep', 'images/pet-sweep.jpg');
+new Mall('scissors', 'images/scissors.jpg');
+new Mall('shark', 'images/shark.jpg');
+new Mall('sweep', 'images/sweep.png');
+new Mall('tauntaun', 'images/tauntaun.jpg');
+new Mall('unicorn', 'images/unicorn.jpg');
+new Mall('usb', 'images/usb.gif');
+new Mall('water-can', 'images/water-can.jpg');
+new Mall('wine-glass', 'images/wine-glass.jpg');
 
 //call Click event listener
 sectionTag.addEventListener('click', clickOnImage);
