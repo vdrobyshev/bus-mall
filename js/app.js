@@ -253,7 +253,7 @@ function updateStorage() {
 
 }
 
-//116
+//116 else 
 function retrieveStorage() {
   if (localStorage.mall) {
     console.log(localStorage.mall)
