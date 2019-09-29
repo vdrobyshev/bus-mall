@@ -31,7 +31,6 @@ Mall.all = [];
 
 function generateRandom() {
   var random = Math.floor(Math.random() * Mall.all.length);
-  //console.log('random' + random);
   return random;
 }
 
@@ -90,7 +89,7 @@ function render() {
 /////eventListener
 
 var clickOnImage = function (event) {
-  //retrieveStorage();
+  
   var imageClicked = event.target.id;
 
 
@@ -109,23 +108,23 @@ var clickOnImage = function (event) {
     }
 
 
-    //////////////////////////////////////////////////
-    if (totalVotes === 25) {
+    // checks if the total number is 25
+    if (totalVotes === 5) {
 
       updateStorage();
-      // retrieveStorage();
-      getData();//chart array
+      
+      //create the chart
+      getData();
 
       populateChart();
       barChart.update();
-
-
 
 
       sectionTag.removeEventListener('click', clickOnImage);
 
       alert('You completed the voting');
 
+      //create the list with the stats of the voting
       var ulElement = document.createElement('ul');
 
       for (var i = 0; i < Mall.all.length; i++) {
@@ -168,10 +167,7 @@ new Mall('unicorn', '/images/unicorn.jpg');
 new Mall('usb', '/images/usb.gif');
 new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
-console.log(Mall.all);
-//updateStorage();
-console.log(localStorage)
-//render();
+
 sectionTag.addEventListener('click', clickOnImage);
 
 
@@ -185,9 +181,7 @@ var viewsData = [];
 function getData() {
   for (var i = 0; i < Mall.all.length; i++) {
     nameData.push(Mall.all[i].name);
-    //console.log(Mall.all[i].name);
     clickData.push(Mall.all[i].clicked);
-    //console.log(Mall.all[i].clicked);
     viewsData.push(Mall.all[i].views);
   }
 
@@ -246,6 +240,7 @@ function populateChart() {
 
 }
 
+//sends data to local storage
 function updateStorage() {
 
   var jsonString = JSON.stringify(Mall.all);
@@ -253,30 +248,18 @@ function updateStorage() {
 
 }
 
-//116 else 
+//retrives data from local storage 
 function retrieveStorage() {
   if (localStorage.mall) {
-    console.log(localStorage.mall)
     var data = localStorage.getItem('mall');
-    //console.log(data);
-
     var parsedData = JSON.parse(data);
-    //console.log(parsedData);
-
+    
     Mall.all = parsedData;
-
-
-    // for (var i = 0; i < parsedData.length; i++) {
-    //   new Mall(parsedData[i].name, parsedData[i].image, parsedData[i].clicked, parsedData[i].views);
-    // }
-    //console.log(Mall.all);
-
-    // render();
+    
   }
   render();
 }
-//localStorage.clear();
-//
+
 
 retrieveStorage();
 
