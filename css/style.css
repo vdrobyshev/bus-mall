@@ -1,20 +1,57 @@
-body section{
-  display: inline-block;
 
+
+body {
+  background-color: rgb(172, 194, 214);
+display: inline-block;
 }
 
+h1{
+  font-size: 60px;
+  margin-top: 20px;
+  margin-bottom: 40 px;
+  text-align: center;
+  color: blue;
+}
+
+
+h2{
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 160 px;
+  padding: 20px;
+  text-align: center;
+  color: blue;
+
+}
 section {
+  
+  text-align: center;
 
 }
 
 img {
-  /* display: inline-block; */
-  float: left;
+  
+  margin: 20px 80px 20px 80px;
+  text-align: center;
   width: 300px;
   height: 300px;
 }
+section :last-child{
+  margin-right: 0px;
+}
 
 section ul{
-  font-size: 20px;
+
+  font-size: 24px;
   margin-top: 15px;
+  color: rgb(26, 18, 75);
+  margin-bottom: 40px;
+}
+
+section ul :nth-child(even){
+  background-color: rgb(130, 167, 236);
+}
+
+section ul :nth-child(odd){
+  background-color: rgb(179, 182, 187);
 }

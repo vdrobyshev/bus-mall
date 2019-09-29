@@ -89,7 +89,7 @@ function render() {
 /////eventListener
 
 var clickOnImage = function (event) {
-  
+
   var imageClicked = event.target.id;
 
 
@@ -112,7 +112,7 @@ var clickOnImage = function (event) {
     if (totalVotes === 5) {
 
       updateStorage();
-      
+
       //create the chart
       getData();
 
@@ -123,6 +123,10 @@ var clickOnImage = function (event) {
       sectionTag.removeEventListener('click', clickOnImage);
 
       alert('You completed the voting');
+
+      var res = document.getElementById('h2');
+      res.textContent = "Here are the results:";
+
 
       //create the list with the stats of the voting
       var ulElement = document.createElement('ul');
@@ -253,9 +257,9 @@ function retrieveStorage() {
   if (localStorage.mall) {
     var data = localStorage.getItem('mall');
     var parsedData = JSON.parse(data);
-    
+
     Mall.all = parsedData;
-    
+
   }
   render();
 }
