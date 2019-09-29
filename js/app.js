@@ -6,6 +6,8 @@ var rightImage = null;
 
 var totalVotes = 0;
 
+
+//assign variables to id tags from index.html file
 var sectionTag = document.getElementById('images');
 var left = document.getElementById('left');
 var middle = document.getElementById('middle');
@@ -21,8 +23,6 @@ function Mall(name, image) {
   this.clicked = 0;
   this.views = 0;
   Mall.all.push(this);
-
-
 }
 
 Mall.all = [];
@@ -64,7 +64,7 @@ function render() {
 
 
   else {
-
+    //assign the image to image ids left, right, middle from index.html display the image on the sceen
     memory = [];
     left.src = Mall.all[leftImage].image;
     memory.push(leftImage);
@@ -77,7 +77,7 @@ function render() {
     right.src = Mall.all[rightImage].image;
     memory.push(rightImage);
 
-
+    //Count the number of views for each image
     Mall.all[leftImage].views++;
     Mall.all[rightImage].views++;
     Mall.all[middleImage].views++;
@@ -86,7 +86,7 @@ function render() {
 }
 
 
-/////eventListener
+/////eventListener Click
 
 var clickOnImage = function (event) {
 
@@ -95,6 +95,7 @@ var clickOnImage = function (event) {
 
   if (imageClicked === 'left' || imageClicked === 'right' || imageClicked === 'middle') {
 
+    //increase the number of votes for the selected image
     totalVotes++;
 
     if (imageClicked === 'left') {
@@ -109,7 +110,7 @@ var clickOnImage = function (event) {
 
 
     // checks if the total number is 25
-    if (totalVotes === 5) {
+    if (totalVotes === 25) {
 
       updateStorage();
 
@@ -122,13 +123,15 @@ var clickOnImage = function (event) {
 
       sectionTag.removeEventListener('click', clickOnImage);
 
-      alert('You completed the voting');
+      //Inform that the voting is complete
+      alert('Thank you. You completed the voting.');
 
+      //Display the results in H1 in index.html
       var res = document.getElementById('h2');
-      res.textContent = "Here are the results:";
+      res.textContent = 'Here are the results:';
 
 
-      //create the list with the stats of the voting
+      //create the list with the stats of the voting with name, number of clicks and views
       var ulElement = document.createElement('ul');
 
       for (var i = 0; i < Mall.all.length; i++) {
@@ -172,6 +175,7 @@ new Mall('usb', '/images/usb.gif');
 new Mall('water-can', '/images/water-can.jpg');
 new Mall('wine-glass', '/images/wine-glass.jpg');
 
+//call Click event listener
 sectionTag.addEventListener('click', clickOnImage);
 
 
@@ -196,10 +200,9 @@ function getData() {
 var ctx = document.getElementById('myChart').getContext('2d');
 
 var barChart;
+//Generate the chart with the results of the voting
+//////////The design and approach was borrowed from https://codepen.io/Shokeen/pen/NpgbKg
 function populateChart() {
-
-
-  //////////The design and approach was borrowed from https://codepen.io/Shokeen/pen/NpgbKg
   var chartClicks = {
     label: 'Number of clicks',
     data: clickData,
@@ -252,7 +255,7 @@ function updateStorage() {
 
 }
 
-//retrives data from local storage 
+//retrieves data from local storage
 function retrieveStorage() {
   if (localStorage.mall) {
     var data = localStorage.getItem('mall');
